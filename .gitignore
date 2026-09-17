@@ -28,3 +28,6 @@ src/realtimegym/environments/prompts
 # Personal config files with API keys
 configs/*-personal.yaml
 configs/my-*.yaml
+.DS_Store
+src/.DS_Store
+src/realtimegym/.DS_Store
