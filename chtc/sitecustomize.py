@@ -11,15 +11,17 @@ os.environ["LOGNAME"] = user
 os.environ["HOME"] = "/tmp"
 
 # 2. Monkeypatch getpass module
-def getuser():
+def getuser() -> str:
     return user
 getpass.getuser = getuser
 
 # 3. Monkeypatch pwd module
 orig_getpwuid = pwd.getpwuid
-def fake_getpwuid(uid):
+def fake_getpwuid(uid: int) -> pwd.struct_passwd:
     try:
         return orig_getpwuid(uid)
     except KeyError:
-        return (user, 'x', uid, 1000, 'CHTC User', "/tmp", '/bin/bash')
+        return pwd.struct_passwd(
+            (user, "x", uid, 1000, "CHTC User", "/tmp", "/bin/bash")
+        )
 pwd.getpwuid = fake_getpwuid
